@@ -1,3 +1,3 @@
 layout: page
-title: "marturepossi.github.io"
+title: "Martu's site"
 permalink: /about/contact/
