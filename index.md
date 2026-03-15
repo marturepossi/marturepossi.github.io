@@ -12,4 +12,4 @@ Hi! I'm Martu.
 - [Contact](/contact/)
 
 ## Posts
-- [My first post](/2026/03/15/my-first-post/)
+- [My first post](/2026/03/15/my-first-post)
