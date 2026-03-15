@@ -11,3 +11,6 @@ Hi! I'm Martu.
 
 - [About me](/about/)
 - [Contact](/contact/)
+
+## Posts
+- [Posts](/my-first-post/)
