@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML & CSS Practice — Martu</title>
+  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ff9d;
+      --accent2: #ff006e;
+      --accent3: #7b61ff;
+      --text: #e0e0f0;
+      --muted: #555570;
+      --card-bg: #13131f;
+      --yellow: #ffd60a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,157,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,157,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    nav .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 70px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .section-num {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+    }
+
+    .section-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 90px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    #hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    #hero p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 500px;
+      margin-bottom: 28px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 16px 0;
+      position: relative;
+    }
+
+    .code-block .label {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .code-block code {
+      color: var(--accent);
+      line-height: 1.8;
+    }
+
+    .code-block .comment { color: var(--muted); }
+    .code-block .tag-name { color: var(--accent2); }
+    .code-block .attr { color: var(--yellow); }
+    .code-block .val { color: var(--accent3); }
+    .code-block .prop { color: var(--accent2); }
+
+    /* ── TYPOGRAPHY DEMO ── */
+    .type-demo {
+      display: grid;
+      gap: 16px;
+    }
+
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .type-label {
+      font-size: 10px;
+      color: var(--muted);
+      min-width: 36px;
+      letter-spacing: 0.1em;
+    }
+
+    .type-divider { width: 1px; height: 20px; background: var(--border); }
+
+    .type-row h1 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; }
+    .type-row h2 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; }
+    .type-row h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+    .type-row h4 { font-size: 18px; font-weight: 700; }
+    .type-row h5 { font-size: 14px; font-weight: 700; color: var(--muted); }
+    .type-row h6 { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .type-row p  { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+    /* ── COLORS ── */
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .color-swatch {
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .swatch-box {
+      height: 70px;
+    }
+
+    .swatch-info {
+      padding: 10px 12px;
+      background: var(--card-bg);
+    }
+
+    .swatch-name {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .swatch-val {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── BOX MODEL ── */
+    .box-model-demo {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .bm-margin {
+      background: rgba(255,0,110,0.12);
+      border: 2px dashed var(--accent2);
+      padding: 24px;
+      position: relative;
+    }
+
+    .bm-border {
+      background: rgba(123,97,255,0.12);
+      border: 6px solid var(--accent3);
+      padding: 20px;
+      position: relative;
+    }
+
+    .bm-padding {
+      background: rgba(0,255,157,0.08);
+      border: 2px dashed var(--accent);
+      padding: 20px;
+      position: relative;
+    }
+
+    .bm-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 20px 32px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .bm-label {
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .bm-margin > .bm-label   { color: var(--accent2); }
+    .bm-border > .bm-label   { color: var(--accent3); }
+    .bm-padding > .bm-label  { color: var(--accent); }
+
+    /* ── FLEXBOX ── */
+    .flex-demos {
+      display: grid;
+      gap: 16px;
+    }
+
+    .flex-demo-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .flex-demo-label span {
+      color: var(--accent);
+    }
+
+    .flex-box {
+      display: flex;
+      gap: 8px;
+      padding: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      min-height: 70px;
+    }
+
+    .flex-item {
+      background: var(--border);
+      border: 1px solid var(--accent3);
+      color: var(--accent3);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .f1 { flex: 1; }
+
+    /* ── GRID ── */
+    .grid-demos {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-demo {
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .grid-item {
+      background: var(--border);
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 12px;
+      text-align: center;
+    }
+
+    /* ── FORMS ── */
+    .form-demo {
+      display: grid;
+      gap: 20px;
+      max-width: 480px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    select option { background: var(--card-bg); }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    input[type="radio"] { border-radius: 50%; }
+
+    input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    input[type="radio"]:checked {
+      background: var(--accent3);
+      border-color: var(--accent3);
+      box-shadow: inset 0 0 0 3px var(--card-bg);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover { background: #00cc7d; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent2);
+      color: var(--bg);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead tr {
+      border-bottom: 2px solid var(--accent);
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    tbody tr:hover td {
+      background: rgba(0,255,157,0.03);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      font-weight: 700;
+    }
+
+    .badge-green  { background: rgba(0,255,157,0.15); color: var(--accent); }
+    .badge-red    { background: rgba(255,0,110,0.15); color: var(--accent2); }
+    .badge-purple { background: rgba(123,97,255,0.15); color: var(--accent3); }
+
+    /* ── MEDIA & IMAGES ── */
+    .media-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .img-card {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+
+    .img-card img {
+      width: 100%;
+      display: block;
+      filter: grayscale(30%);
+      transition: filter 0.3s, transform 0.3s;
+    }
+
+    .img-card:hover img {
+      filter: grayscale(0%) drop-shadow(0 0 8px var(--accent));
+      transform: scale(1.03);
+    }
+
+    .img-caption {
+      padding: 10px 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    .anim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .anim-card {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .anim-box {
+      width: 48px;
+      height: 48px;
+      background: var(--border);
+      border: 2px solid var(--accent);
+    }
+
+    .anim-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .spin  { animation: spin 2s linear infinite; }
+    .pulse { animation: pulse 1.5s ease-in-out infinite; }
+    .bounce-anim { animation: bounce-anim 1s ease-in-out infinite; }
+    .shake { animation: shake 0.8s ease-in-out infinite; }
+
+    @keyframes spin        { to { transform: rotate(360deg); } }
+    @keyframes pulse       { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+    @keyframes bounce-anim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    @keyframes shake       { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)} }
+
+    /* ── POSITIONING ── */
+    .position-demo {
+      position: relative;
+      height: 200px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .pos-item {
+      position: absolute;
+      border: 1px solid;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pos-tl { top:16px; left:16px; color: var(--accent); border-color: var(--accent); }
+    .pos-tr { top:16px; right:16px; color: var(--accent2); border-color: var(--accent2); }
+    .pos-bl { bottom:16px; left:16px; color: var(--accent3); border-color: var(--accent3); }
+    .pos-br { bottom:16px; right:16px; color: var(--yellow); border-color: var(--yellow); }
+    .pos-center {
+      top:50%; left:50%;
+      transform: translate(-50%,-50%);
+      color: var(--text); border-color: var(--border);
+      background: var(--surface);
+    }
+
+    /* ── PSEUDO ── */
+    .pseudo-demos {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pseudo-item {
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      position: relative;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .pseudo-item::before {
+      content: '▶';
+      color: var(--accent);
+      margin-right: 10px;
+      transition: transform 0.2s;
+    }
+
+    .pseudo-item::after {
+      content: attr(data-tag);
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .pseudo-item:hover::before  { transform: rotate(90deg); }
+    .pseudo-item:hover          { border-color: var(--accent); padding-left: 28px; }
+    .pseudo-item:nth-child(odd) { border-left: 3px solid var(--accent3); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 60px;
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .page-footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a class="nav-brand" href="index.html">← Martu's site</a>
+    <ul class="nav-links">
+      <li><a href="#typography">Type</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#boxmodel">Box Model</a></li>
+      <li><a href="#flexbox">Flex</a></li>
+      <li><a href="#grid">Grid</a></li>
+      <li><a href="#forms">Forms</a></li>
+      <li><a href="#tables">Tables</a></li>
+      <li><a href="#animations">Anim</a></li>
+      <li><a href="#positioning">Position</a></li>
+      <li><a href="#pseudo">Pseudo</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1>HTML & CSS<br><em>Practice Page</em></h1>
+    <p>Una referencia visual de los elementos más importantes de HTML y CSS. Estudiala, modificala, rompela.</p>
+    <a class="back-link" href="index.html">← Volver al inicio</a>
+  </section>
+
+  <!-- 1. TYPOGRAPHY -->
+  <section id="typography">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Typography</h2>
+      <span class="tag">h1–h6 · p · em · strong</span>
+    </div>
+    <div class="type-demo">
+      <div class="type-row"><span class="type-label">h1</span><div class="type-divider"></div><h1>Heading One</h1></div>
+      <div class="type-row"><span class="type-label">h2</span><div class="type-divider"></div><h2>Heading Two</h2></div>
+      <div class="type-row"><span class="type-label">h3</span><div class="type-divider"></div><h3>Heading Three</h3></div>
+      <div class="type-row"><span class="type-label">h4</span><div class="type-divider"></div><h4>Heading Four</h4></div>
+      <div class="type-row"><span class="type-label">h5</span><div class="type-divider"></div><h5>Heading Five</h5></div>
+      <div class="type-row"><span class="type-label">h6</span><div class="type-divider"></div><h6>Heading Six</h6></div>
+      <div class="type-row"><span class="type-label">p</span><div class="type-divider"></div><p>Paragraph text. Podés usar <strong>strong para negrita</strong>, <em>em para itálica</em>, y <a href="#" style="color:var(--accent)">links así</a>.</p></div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+      <span class="label">html</span>
+      <code>
+<span class="tag-name">&lt;h1&gt;</span>Título principal<span class="tag-name">&lt;/h1&gt;</span><br>
+<span class="tag-name">&lt;p&gt;</span>Párrafo con <span class="tag-name">&lt;strong&gt;</span>negrita<span class="tag-name">&lt;/strong&gt;</span> y <span class="tag-name">&lt;em&gt;</span>itálica<span class="tag-name">&lt;/em&gt;</span><span class="tag-name">&lt;/p&gt;</span>
+      </code>
+    </div>
+  </section>
+
+  <!-- 2. COLORS -->
+  <section id="colors">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Colors & CSS Variables</h2>
+      <span class="tag">:root · var()</span>
+    </div>
+    <div class="colors-grid">
+      <div class="color-swatch"><div class="swatch-box" style="background:#00ff9d"></div><div class="swatch-info"><div class="swatch-name" style="color:#00ff9d">--accent</div><div class="swatch-val">#00ff9d</div></div></div>
+      <div class="color-swatch"><div class="swatch-box" style="background:#ff006e"></div><div class="swatch-info"><div class="swatch-name" style="color:#ff006e">--accent2</div><div class="swatch-val">#ff006e</div></div></div>
+      <div class="color-swatch"><div class="swatch-box" style="background:#7b61ff"></div><div class="swatch-info"><div class="swatch-name" style="color:#7b61ff">--accent3</div><div class="swatch-val">#7b61ff</div></div></div>
+      <div class="color-swatch"><div class="swatch-box" style="background:#ffd60a"></div><div class="swatch-info"><div class="swatch-name" style="color:#ffd60a">--yellow</div><div class="swatch-val">#ffd60a</div></div></div>
+      <div class="color-swatch"><div class="swatch-box" style="background:#13131f;border:1px solid #1e1e2e"></div><div class="swatch-info"><div class="swatch-name">--card-bg</div><div class="swatch-val">#13131f</div></div></div>
+      <div class="color-swatch"><div class="swatch-box" style="background:#555570"></div><div class="swatch-info"><div class="swatch-name" style="color:#555570">--muted</div><div class="swatch-val">#555570</div></div></div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+      <span class="label">css</span>
+      <code>
+<span class="comment">/* Definir variables globales */</span><br>
+<span class="prop">:root</span> {<br>
+&nbsp;&nbsp;<span class="attr">--accent</span>: <span class="val">#00ff9d</span>;<br>
+&nbsp;&nbsp;<span class="attr">--bg</span>: <span class="val">#0a0a0f</span>;<br>
+}<br><br>
+<span class="comment">/* Usarlas */</span><br>
+<span class="prop">button</span> { <span class="attr">background</span>: <span class="val">var(--accent)</span>; }
+      </code>
+    </div>
+  </section>
+
+  <!-- 3. BOX MODEL -->
+  <section id="boxmodel">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Box Model</h2>
+      <span class="tag">margin · border · padding · content</span>
+    </div>
+    <div class="box-model-demo">
+      <div class="bm-margin">
+        <span class="bm-label">margin</span>
+        <div class="bm-border">
+          <span class="bm-label">border</span>
+          <div class="bm-padding">
+            <span class="bm-label">padding</span>
+            <div class="bm-content">✦ content ✦</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="code-block">
+      <span class="label">css</span>
+      <code>
+<span class="prop">.box</span> {<br>
+&nbsp;&nbsp;<span class="attr">margin</span>: <span class="val">24px</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/* espacio afuera */</span><br>
+&nbsp;&nbsp;<span class="attr">border</span>: <span class="val">2px solid #fff</span>;<span class="comment">/* borde */</span><br>
+&nbsp;&nbsp;<span class="attr">padding</span>: <span class="val">16px</span>;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/* espacio adentro */</span><br>
+}
+      </code>
+    </div>
+  </section>
+
+  <!-- 4. FLEXBOX -->
+  <section id="flexbox">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Flexbox</h2>
+      <span class="tag">display:flex · justify · align</span>
+    </div>
+    <div class="flex-demos">
+      <div>
+        <div class="flex-demo-label">justify-content: <span>flex-start</span></div>
+        <div class="flex-box" style="justify-content:flex-start"><div class="flex-item">A</div><div class="flex-item">B</div><div class="flex-item">C</div></div>
+      </div>
+      <div>
+        <div class="flex-demo-label">justify-content: <span>center</span></div>
+        <div class="flex-box" style="justify-content:center"><div class="flex-item">A</div><div class="flex-item">B</div><div class="flex-item">C</div></div>
+      </div>
+      <div>
+        <div class="flex-demo-label">justify-content: <span>space-between</span></div>
+        <div class="flex-box" style="justify-content:space-between"><div class="flex-item">A</div><div class="flex-item">B</div><div class="flex-item">C</div></div>
+      </div>
+      <div>
+        <div class="flex-demo-label">flex: <span>1</span> (items que crecen para llenar el espacio)</div>
+        <div class="flex-box"><div class="flex-item f1">A</div><div class="flex-item f1">B</div><div class="flex-item f1">C</div></div>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+      <span class="label">css</span>
+      <code>
+<span class="prop">.container</span> {<br>
+&nbsp;&nbsp;<span class="attr">display</span>: <span class="val">flex</span>;<br>
+&nbsp;&nbsp;<span class="attr">justify-content</span>: <span class="val">space-between</span>;<br>
+&nbsp;&nbsp;<span class="attr">align-items</span>: <span class="val">center</span>;<br>
+&nbsp;&nbsp;<span class="attr">gap</span>: <span class="val">16px</span>;<br>
+}
+      </code>
+    </div>
+  </section>
+
+  <!-- 5. GRID -->
+  <section id="grid">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>CSS Grid</h2>
+      <span class="tag">display:grid · columns · rows</span>
+    </div>
+    <div class="grid-demos">
+      <div>
+        <div class="flex-demo-label">grid-template-columns: <span>repeat(3, 1fr)</span></div>
+        <div class="grid-demo" style="grid-template-columns:repeat(3,1fr)">
+          <div class="grid-item">1</div><div class="grid-item">2</div><div class="grid-item">3</div>
+          <div class="grid-item">4</div><div class="grid-item">5</div><div class="grid-item">6</div>
+        </div>
+      </div>
+      <div>
+        <div class="flex-demo-label">grid-template-columns: <span>1fr 2fr 1fr</span></div>
+        <div class="grid-demo" style="grid-template-columns:1fr 2fr 1fr">
+          <div class="grid-item">narrow</div><div class="grid-item">wide</div><div class="grid-item">narrow</div>
+        </div>
+      </div>
+      <div>
+        <div class="flex-demo-label">grid-column: <span>span 2</span> (elemento que abarca columnas)</div>
+        <div class="grid-demo" style="grid-template-columns:repeat(3,1fr)">
+          <div class="grid-item" style="grid-column:span 2">span 2</div><div class="grid-item">1</div>
+          <div class="grid-item">1</div><div class="grid-item">1</div><div class="grid-item">1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FORMS -->
+  <section id="forms">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Forms</h2>
+      <span class="tag">input · select · textarea · button</span>
+    </div>
+    <div class="form-demo">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" placeholder="Tu nombre...">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label for="topic">Tema</label>
+        <select id="topic">
+          <option value="">Seleccioná...</option>
+          <option>HTML</option>
+          <option>CSS</option>
+          <option>JavaScript</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Checkboxes</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" checked> Opción A</label>
+          <label class="checkbox-item"><input type="checkbox"> Opción B</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Radio buttons</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="radio" name="r" checked> Sí</label>
+          <label class="checkbox-item"><input type="radio" name="r"> No</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="msg">Mensaje</label>
+        <textarea id="msg" placeholder="Escribí algo..."></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary">Enviar</button>
+        <button class="btn btn-outline">Cancelar</button>
+        <button class="btn btn-ghost">Limpiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. TABLES -->
+  <section id="tables">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Tables</h2>
+      <span class="tag">table · thead · tbody · tr · td</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Propiedad</th>
+            <th>Valor</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>display</td><td><code>flex</code></td><td>Activa flexbox</td><td><span class="badge badge-green">útil</span></td></tr>
+          <tr><td>position</td><td><code>absolute</code></td><td>Posición relativa al padre</td><td><span class="badge badge-purple">importante</span></td></tr>
+          <tr><td>overflow</td><td><code>hidden</code></td><td>Oculta contenido que se sale</td><td><span class="badge badge-green">útil</span></td></tr>
+          <tr><td>z-index</td><td><code>100</code></td><td>Orden de apilamiento</td><td><span class="badge badge-red">tricky</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8. ANIMATIONS -->
+  <section id="animations">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Animations</h2>
+      <span class="tag">@keyframes · animation · transition</span>
+    </div>
+    <div class="anim-grid">
+      <div class="anim-card"><div class="anim-box spin"></div><div class="anim-label">spin</div></div>
+      <div class="anim-card"><div class="anim-box pulse"></div><div class="anim-label">pulse</div></div>
+      <div class="anim-card"><div class="anim-box bounce-anim"></div><div class="anim-label">bounce</div></div>
+      <div class="anim-card"><div class="anim-box shake"></div><div class="anim-label">shake</div></div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+      <span class="label">css</span>
+      <code>
+<span class="prop">@keyframes spin</span> {<br>
+&nbsp;&nbsp;<span class="attr">to</span> { <span class="prop">transform</span>: <span class="val">rotate(360deg)</span>; }<br>
+}<br><br>
+<span class="prop">.spinner</span> {<br>
+&nbsp;&nbsp;<span class="attr">animation</span>: <span class="val">spin 2s linear infinite</span>;<br>
+}
+      </code>
+    </div>
+  </section>
+
+  <!-- 9. POSITIONING -->
+  <section id="positioning">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Positioning</h2>
+      <span class="tag">static · relative · absolute · fixed · sticky</span>
+    </div>
+    <div class="position-demo">
+      <div class="pos-item pos-tl">top: 16px<br>left: 16px</div>
+      <div class="pos-item pos-tr">top: 16px<br>right: 16px</div>
+      <div class="pos-item pos-center">center via transform</div>
+      <div class="pos-item pos-bl">bottom: 16px<br>left: 16px</div>
+      <div class="pos-item pos-br">bottom: 16px<br>right: 16px</div>
+    </div>
+    <div class="code-block">
+      <span class="label">css</span>
+      <code>
+<span class="prop">.parent</span> { <span class="attr">position</span>: <span class="val">relative</span>; }<br><br>
+<span class="prop">.child</span> {<br>
+&nbsp;&nbsp;<span class="attr">position</span>: <span class="val">absolute</span>;<br>
+&nbsp;&nbsp;<span class="attr">top</span>: <span class="val">50%</span>; <span class="attr">left</span>: <span class="val">50%</span>;<br>
+&nbsp;&nbsp;<span class="attr">transform</span>: <span class="val">translate(-50%, -50%)</span>;<br>
+}
+      </code>
+    </div>
+  </section>
+
+  <!-- 10. PSEUDO -->
+  <section id="pseudo">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Pseudo-classes & elements</h2>
+      <span class="tag">::before · ::after · :hover · :nth-child</span>
+    </div>
+    <div class="pseudo-demos">
+      <div class="pseudo-item" data-tag="::before + :hover">Hover sobre mí — el ▶ rota con ::before</div>
+      <div class="pseudo-item" data-tag=":nth-child(odd)">Este tiene borde izquierdo por :nth-child(odd)</div>
+      <div class="pseudo-item" data-tag="::after + attr()">El texto de la derecha viene de data-tag con ::after</div>
+      <div class="pseudo-item" data-tag=":nth-child(odd)">Otro impar con borde</div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+      <span class="label">css</span>
+      <code>
+<span class="prop">.item::before</span> {<br>
+&nbsp;&nbsp;<span class="attr">content</span>: <span class="val">'▶'</span>;<br>
+&nbsp;&nbsp;<span class="attr">transition</span>: <span class="val">transform 0.2s</span>;<br>
+}<br><br>
+<span class="prop">.item:hover::before</span> {<br>
+&nbsp;&nbsp;<span class="attr">transform</span>: <span class="val">rotate(90deg)</span>;<br>
+}<br><br>
+<span class="prop">.item:nth-child(odd)</span> {<br>
+&nbsp;&nbsp;<span class="attr">border-left</span>: <span class="val">3px solid var(--accent3)</span>;<br>
+}
+      </code>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer class="page-footer">
+    <span>HTML & CSS Practice — Martu's site</span>
+    <a href="index.html">← Volver al inicio</a>
+  </footer>
+</div>
+
+</body>
+</html>
