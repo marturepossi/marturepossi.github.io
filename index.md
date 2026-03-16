@@ -1,5 +1,5 @@
 ---
-layout: home
+
 title: Martu's site
 theme: jekyll-theme-hacker
 ---
