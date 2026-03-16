@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martu's Site</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ff9d;
+      --accent2: #ff006e;
+      --accent3: #7b61ff;
+      --text: #e0e0f0;
+      --muted: #555570;
+      --card-bg: #13131f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 100px 0 60px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 9vw, 88px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 .name {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 440px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-sub span {
+      color: var(--accent2);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section {
+      padding: 60px 0 20px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .section-label span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-num {
+      font-size: 11px;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ── PROJECT CARD ── */
+    .projects-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+      transition: border-color 0.25s, transform 0.25s;
+      animation: fadeUp 0.5s ease both;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,255,157,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      color: var(--muted);
+      font-size: 18px;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .card:hover .card-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-url {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── PAGES LIST ── */
+    .pages-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .page-link {
+      border: 1px solid var(--border);
+      padding: 20px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-link::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      transition: bottom 0.2s;
+    }
+
+    .page-link:hover {
+      border-color: var(--accent3);
+      color: var(--accent3);
+    }
+
+    .page-link:hover::after {
+      bottom: 8px;
+    }
+
+    .page-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* ── POSTS LIST ── */
+    .posts-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .post-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .post-item:hover {
+      border-color: var(--accent2);
+      background: rgba(255,0,110,0.04);
+    }
+
+    .post-date {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      min-width: 90px;
+    }
+
+    .post-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .post-arrow {
+      margin-left: auto;
+      color: var(--muted);
+      transition: all 0.2s;
+      font-size: 16px;
+    }
+
+    .post-item:hover .post-arrow {
+      color: var(--accent2);
+      transform: translateX(4px);
+    }
+
+    /* ── OCTOCAT ── */
+    .octocat-section {
+      padding: 40px 0 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .octocat-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .octocat-wrap::before {
+      content: '// github mascot';
+      position: absolute;
+      top: -22px;
+      left: 0;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .octocat-wrap img {
+      width: 120px;
+      filter: drop-shadow(0 0 24px rgba(0,255,157,0.3));
+      transition: filter 0.3s, transform 0.3s;
+    }
+
+    .octocat-wrap img:hover {
+      filter: drop-shadow(0 0 40px rgba(0,255,157,0.6));
+      transform: scale(1.05) rotate(-3deg);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">// portfolio</div>
+    <h1>
+      Hi, I'm
+      <span class="name">Martu.</span>
+    </h1>
+    <p class="hero-sub">
+      Developer & creator.<br>
+      Building things on the web <span>one commit at a time</span>.<span class="cursor"></span>
+    </p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section">
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <span>Projects</span>
+    </div>
+    <div class="projects-grid">
+      <a class="card" href="https://marturepossi.github.io/new-repo-1" target="_blank">
+        <span class="card-arrow">↗</span>
+        <div class="card-title">Berger Montague</div>
+        <div class="card-url">marturepossi.github.io/new-repo-1</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- PAGES -->
+  <section class="section">
+    <div class="section-label">
+      <span class="section-num">02</span>
+      <span>Pages</span>
+    </div>
+    <div class="pages-list">
+      <a class="page-link" href="/about/" data-label="about me">
+        <span class="page-icon">👤</span>
+        About me
+      </a>
+      <a class="page-link" href="/contact/" data-label="get in touch">
+        <span class="page-icon">✉️</span>
+        Contact
+      </a>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section class="section">
+    <div class="section-label">
+      <span class="section-num">03</span>
+      <span>Posts</span>
+    </div>
+    <div class="posts-list">
+      <a class="post-item" href="/2026/03/15/my-first-post">
+        <span class="post-date">Mar 15, 2026</span>
+        <span class="post-title">My first post</span>
+        <span class="post-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- OCTOCAT -->
+  <div class="octocat-section">
+    <div class="octocat-wrap">
+      <img src="https://myoctocat.com/assets/images/base-octocat.svg" alt="Octocat">
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer>
+    <span>© 2026 Martu's site</span>
+    <a href="https://github.com/marturepossi" target="_blank">github ↗</a>
+  </footer>
+</div>
+
+</body>
+</html>
